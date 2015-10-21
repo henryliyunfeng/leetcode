@@ -1,0 +1,56 @@
+package leetcode121;
+//Best Time to Buy and Sell Stock
+
+public class Solution {
+	//时间复杂度O(n^2)，超出
+//    public static int maxProfit(int[] prices) {
+//    	if(prices==null||prices.length<2){
+//    		return 0;
+//    	}
+//    	int maxprofit=0;
+//    	int curmin=prices[0];
+//    	for(int i=1;i<prices.length;i++){
+//    		curmin=Math.min(curmin, prices[i]);
+//    		for(int j=i;j<prices.length;j++){
+//    			maxprofit=Math.max(maxprofit, prices[j]-curmin);
+//    		}
+//    	}
+//    	
+//    	return maxprofit;
+//    }
+	
+	
+	//动态规划法。从前向后遍历数组，记录当前出现过的最低价格，作为买入价格，
+	//并计算以当天价格出售的收益，作为可能的最大收益，整个遍历过程中，出现过的最大收益就是所求。
+	public static int maxProfit(int[] prices) {
+		if(prices==null||prices.length<2){
+			return 0;
+		}
+		int maxprofit=0;
+		int curmin=prices[0];
+		for(int i=1;i<prices.length;i++){//遍历一遍后curmin就是当前最小值
+			curmin=Math.min(curmin, prices[i]);
+			maxprofit=Math.max(maxprofit,prices[i]-curmin);//变量一遍maxprofit就是最大收益
+		}
+		return maxprofit;
+	}
+    
+    public static class SolutionTestDrive{
+    	public static void main(String[] args){
+    		int[] prices=new int[5];
+    		for(int i=1;i<6;i++){
+    			prices[i-1]=i;
+    		}
+    		for(int i=0;i<prices.length;i++){
+    			System.out.print(prices[i]+"-");
+    		}
+    		System.out.println();
+    		
+    		System.out.println(Solution.maxProfit(prices));
+    	}
+}
+
+}
+
+
+
