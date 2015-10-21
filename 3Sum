@@ -1,0 +1,81 @@
+#include<iostream>
+#include<vector>
+using namespace std;
+//首先是求解：因为要求3个数，如果我们固定其中1个数，再用求“和为某值的2个数的组合”的解法，就能把剩下的2个数求出来。因
+//此，先对数组进行非递减排序，这样整个数组的数就由小到大排列。i 的取值由 0 至 n - 1，对每一个i，我们求当num[i]是解当中的其
+//中一个数时，其他的2个数。设有指针p指向数组头(实际只要p从i + 1开始)，q指向数组尾，sum = num[i] + num[p] + num[q]，因为num[i]
+//是一定在解中的，所以如果sum < 0，因为num[q]已经不能增大，所以说明num[p]太小了，这时p需要向后移动，找一个更大的数。
+//同理，sum > 0，说明num[q]太大了，需要q向前移动。当sum == 0时，说明找到了一个解。但找到了一个解，并不说明解中有num[i]的
+//所有解都找到了，因此p或q还需要继续移动寻找其他的解，直到p == q为止。
+class Solution {
+public:
+	//冒泡排序
+	void increase_sort(vector<int> &a, int n){
+		int temp = 0;
+		for (int i = 0; i < n ; i++){
+			for (int j = 0; j < n-1-i; j++){
+				if (a[j]>a[j + 1]){
+					temp = a[j];
+					a[j] = a[j + 1];
+					a[j + 1] = temp;
+				}
+			}
+		}
+	}
+	vector<vector<int>> threeSum(vector<int>& nums) {
+		vector<vector<int>> result;
+		const int n = nums.size();
+		increase_sort(nums, n);
+
+		for (int i = 0; i < n; i++){
+			if (i>0 && nums[i] ==nums[i - 1])continue;//去重
+			int p = i + 1, q = n - 1;//俩个指针
+			int sum = 0;
+
+			while (p < q){
+				sum = nums[i] + nums[p] + nums[q];
+				if (sum == 0){
+					vector<int> tempres;
+					tempres.push_back(nums[i]);
+					tempres.push_back(nums[p]);
+					tempres.push_back(nums[q]);
+					increase_sort(tempres, tempres.size());
+					result.push_back(tempres);
+
+					while (++p<q&&nums[p] == nums[p - 1]){}//去重
+					while (--q>p&&nums[q] == nums[q + 1]){}
+				}
+				else if (sum < 0){
+					++p;
+				}
+				else if (sum > 0){
+					--q;
+				}
+			}
+		}
+		//for (int j = 0; j < result.size(); j++){//俩个vector，相当于一个二维数组
+			//for (int k = 0; k < result[j].size(); k++){
+			//	cout << result[j][k]<<' ';
+			//}
+			//cout << endl;
+		//}
+		return result;
+	}
+
+};
+
+int main(void){
+	Solution object;
+	vector<int> b = { -1,0,1,2,-1,-4 };
+	for (int i = 0; i < b.size(); i++){
+		cout << b[i] << ' ';
+	}
+	cout << endl;
+	object.increase_sort(b, b.size());
+	for (int i = 0; i < b.size(); i++){
+		cout << b[i] << ' ';
+	}
+	cout << endl;
+	object.threeSum(b);
+	return 0;
+}
