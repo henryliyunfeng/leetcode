@@ -1,0 +1,38 @@
+//Remove Duplicates from Sorted Array
+//Given a sorted array, remove the duplicates in place such that each element appear only once and return the new length.
+//Do not allocate extra space for another array, you must do this in place with constant memory.
+#include<iostream>
+#include<vector>
+using namespace std;
+
+class Solution {
+public:
+	int removeDuplicates(vector<int>& nums) {
+		int count = 0;//计数器
+		if (nums.size() == 0)count = 0;
+		else{
+			vector<int>::iterator it;
+			it = nums.begin();
+			while (it != (nums.end() - 1)){//nums.end()-1防止迭代器指向非法
+				if (*it == *(it + 1)){ it = nums.erase(it); }//后一个与当前相等，删掉当前，it自动后移
+				else{ count++; it++; }
+			}
+			count++;
+		}
+		return count;
+	}
+
+};
+
+	int main(int argc, char*argv[]){
+		vector<int>array = {};
+		auto it = array.begin();
+		while (it != array.end()){
+			cout << *it << ',';
+			it++;
+		}
+		cout << endl << endl;
+		Solution object;
+		cout << object.removeDuplicates(array) << endl;
+		return 0;
+	}
