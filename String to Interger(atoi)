@@ -1,0 +1,51 @@
+#include<iostream>
+#include<stdlib.h>
+#include<string>
+
+using namespace std;
+
+class Solution {
+public:
+	int myAtoi(string str) {
+		int interger_sign = 1;
+		int res = 0;
+		int ptr = 0;
+		if (str[ptr] == '\0'){//空串返回0
+			return 0;
+		}
+		while (str[ptr] == ' '){
+			ptr++;
+		}
+		if (str[ptr] == '+'){
+			ptr++;
+		}
+		else if (str[ptr] == '-'){
+			interger_sign = -1;
+			ptr++;
+		}
+		
+		while (str[ptr] >= '0'&&str[ptr] <= '9'){
+			if (res>INT_MAX/10||(res == INT_MAX / 10 &&
+				(str[ptr] - '0') > INT_MAX % 10)) {
+				return interger_sign == -1 ? INT_MIN : INT_MAX;
+			}
+			res = res * 10 + str[ptr] - '0';
+			ptr++;
+		}
+		return res * interger_sign;
+	}
+};
+
+int main(int argc, char*argv[]){
+	Solution object;
+	string test[9] = { "1234", "  123", "ab12", " a1b3", "+12ab", "++1", "-100", "9223372036854775809", "-2247483648" };
+	for (int i = 0; i < 9; i++){
+		int res = object.myAtoi(test[i]);
+		cout << res << endl;
+	}
+	char a[] = "9223372036854775809";
+	int n = atoi(a);
+	cout << n << endl;
+	n = INT_MAX / 10;
+	cout << n;
+}
