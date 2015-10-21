@@ -1,0 +1,67 @@
+/**
+* Definition for singly-linked list.
+* struct ListNode {
+*     int val;
+*     ListNode *next;
+*     ListNode(int x) : val(x), next(NULL) {}
+* };
+*/
+#include<iostream>
+using namespace std;
+
+struct ListNode {
+	int val;
+	ListNode *next;
+	ListNode(int x) : val(x), next(NULL) {}
+	
+};
+
+class Solution {
+public:
+	ListNode *removeNthFromEnd(ListNode *head, int n) {
+		// Note: The Solution object is instantiated only once and is reused by each test case.
+		ListNode* dumy = new ListNode(0);
+		dumy->next = head;
+		ListNode* p = dumy;
+		ListNode* q = dumy;
+		for (int i = 0; i < n; i++) p = p->next;
+		while (p->next != NULL){
+			p = p->next;
+			q = q->next;
+		}
+		q->next = q->next->next; //下一个被删除，木有delete
+		return dumy->next;
+	}
+};
+
+int main(int argc, char *argv[]){
+	ListNode *head = new ListNode(0);
+	ListNode *head_copy_1, *head_copy_2;
+	head_copy_1 = head_copy_2 = head;
+	//ListNode *p = (ListNode*)malloc(sizeof(ListNode));
+	for (int i = 1; i < 3; i++){
+		ListNode *p = new ListNode(i);
+		head->next = p;
+		head = p;
+	}
+
+	cout << "original data:" << endl;
+	head_copy_1 = head_copy_1->next;//0不算，向后挪一个
+	head_copy_2 = head_copy_2->next;
+	//cout << head_copy_2->val << endl;
+	while (head_copy_1 != NULL){
+		cout << head_copy_1->val << "->";
+		head_copy_1 = head_copy_1->next;
+	}
+	cout << endl;
+
+	Solution cc;
+	ListNode *ptr=cc.removeNthFromEnd(head_copy_2, 2);
+
+	cout << "after deleting:" << endl;
+	while (ptr!= NULL){
+		cout << ptr->val << "->";
+		ptr = ptr->next;
+	}
+	cout << endl;
+}
