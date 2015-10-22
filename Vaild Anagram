@@ -1,0 +1,40 @@
+public class Vaild_Anagram {
+//	注：变位词，字母的数量是一样的
+//	1.字符串转换成字符数组
+//	2.创建int数组用于存储对应字母的次数
+//	3.对s_char中出现字母则count[]++,对t_char中出现字母则count[]--
+//	4.遍历数组count[]，出现不为0的，则表示s与t不是变位词
+	public static boolean isAnagram(String s, String t) {
+        if(s.length()!=t.length())return false;
+        char[] s_char=s.toCharArray();
+        char[] t_char=t.toCharArray();
+//        System.out.println(s_char[0]);
+        int[] count=new int[256];
+//        int c=Integer.valueOf(s_char[0]);
+//        System.out.println(c);
+        for(int i=0;i<s.length();i++){
+        	count[Integer.valueOf(s_char[i])]++;
+        }
+        
+        for(int i=0;i<s.length();i++){
+        	count[Integer.valueOf(t_char[i])]--;
+        }
+        
+        for(int i=0;i<256;i++){
+        	if(0!=count[i]){
+        		return false;
+        	}
+        }
+		return true;
+    }
+	
+	public static void main(String[] argv){
+		String s="anagram";
+		String t="nsagram";
+		if(isAnagram(s,t)){
+			System.out.println("true");
+		}
+		else
+			System.out.println("false");
+	}
+}
