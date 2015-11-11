@@ -1,0 +1,30 @@
+/*
+ * 需求：
+ * 一个n*n的数组代表2D图片；
+ * 顺时针旋转这个图片
+ */
+public class RotateImage {
+	/*
+	 * 创建一个同样大小的二维数组，用于存放结果
+	 * 原数组的最后一行(向上遍历)输出到目标数组的第一列(向下遍历)
+	 * 把目标数组拷贝到原数组。
+	 */
+	public void rotate(int[][] matrix) {
+		int len=matrix.length;
+        int[][] image=new int[len][len];
+        //matrix第i行元素，赋值给image第j列
+        for(int i=len-1;i>=0;i--)
+        {
+        	for(int j=0;j<=len-1;j++)
+        	{
+        		image[j][len-1-i]=matrix[i][j];//
+        	}
+        }
+        //拷贝到原来的数组上
+        for(int k=0;k<len;k++)
+        	System.arraycopy(image[k], 0, matrix[k], 0, len);//（源，起始位置，目标，起始位置，长度）
+       //打印 
+        for(int i=0;i<len;i++)
+			System.out.println(Arrays.toString(matrix[i]));
+    }
+}
