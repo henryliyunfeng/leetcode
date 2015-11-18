@@ -1,0 +1,36 @@
+/*
+ * 需求：
+ * 实现int sqrt(x)
+ * 计算并返回x的平方根
+ */
+public class Sqrt {
+	/*
+	 * 二分查找
+	 * 在上下界[0,x]内找
+	 * 时间复杂度O（logx）
+	 */
+    public int mySqrt(int x) {
+    	long low=0;
+    	long high=x;//用long防止整型超出
+    	long mid;
+    	while(low<=high)
+    	{
+    		mid=(low+high)/2;
+    		if(mid*mid==x)
+    			return (int)mid;
+    		else if(mid*mid<x)
+    			low=mid+1;
+    		else
+    			high=mid-1;
+    	}
+    	return (int)high;
+    }
+}
+
+class SqrtTest{
+	public static void main(String[] args) {
+		System.out.println(Math.sqrt(2));
+		Sqrt a=new Sqrt();
+		System.out.println(a.mySqrt(2));
+	}
+}
