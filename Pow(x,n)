@@ -1,0 +1,56 @@
+/*
+ * 需求：
+ * 实现pow(x, n).
+ */
+public class Pow {
+	/*
+	 * 天真的算法
+	 * 超时 O（n）
+	 */
+//	public double myPow(double x, int n) {
+//        double result=1.0;
+//		while(n>0)
+//		{
+//			result=result*x;
+//			n--;
+//		}
+//		return result;
+//    }
+	
+	/*
+	 * x的N次方可以看做：x^n = x^(n/2)*x^(n/2)*x^(n%2)。
+	 * 所以利用递归求解，当n==0的时候，返回1。
+	 *当然n是可以小于0的，2^(-3) = 1/(2^3)
+	 *时间复杂度O（nlogn）
+	 *二分查找，n/2
+	 */
+	 public double myPow(double x, int n) {
+		 if (n < 0) {
+				return 1 / power(x, -n);
+			} else {
+				return power(x, n);
+			}		    
+	    }
+	 
+	 public double power(double x, int n) {
+			if (n == 0)
+				return 1;
+		 
+			double v = power(x, n / 2);
+		 
+			if (n % 2 == 0) {
+				return v * v;
+			} else {
+				return v * v * x;
+			}
+		}
+	
+}
+
+class PowTest{
+	public static void main(String[] args) {
+		System.out.println(Math.pow(2, 3));
+		Pow a=new Pow();
+		System.out.println(a.myPow(2, -3));
+	}
+}
