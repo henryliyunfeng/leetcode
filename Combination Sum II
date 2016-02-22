@@ -1,0 +1,52 @@
+package Array;
+/*
+ * 需求：一个数组C，里面都是正数，一个目标数T。
+ * 在数组C中找出所有集合，能加起来等于T
+ * C是升序排列
+ * 数组中的数字只可以使用1次
+ * 解的集合中不能含有相同的集合。
+ */
+import java.util.*;
+public class CombinationSumII {
+    public List<List<Integer>> combinationSum2(int[] candidates, int target) {
+        List<List<Integer>> result=new ArrayList<List<Integer>>();
+        
+        List<Integer> current=new ArrayList<Integer>();
+        Arrays.sort(candidates);
+        //System.out.println(Arrays.toString(candidates));
+        combinationSum2(candidates,target,0,current,result);
+        //去重复
+        List<List<Integer>> uniqueresult=new ArrayList<List<Integer>>();
+        for(int i=0;i<result.size();i++){
+        	if(!uniqueresult.contains(result.get(i)))
+        			uniqueresult.add(result.get(i));
+        			
+        }
+        return uniqueresult;
+    }
+    
+    public void combinationSum2(int[] candidates,int target,int j,List<Integer> curr,List<List<Integer>> result){
+    	if(target==0){
+    		List<Integer> tmp=new ArrayList<Integer>(curr);
+    		result.add(tmp);
+    		return;
+    	}
+    	
+    	for(int i=j;i<candidates.length;i++){
+    		if(target<candidates[i])
+    			return ;
+    		curr.add(candidates[i]);
+    		combinationSum2(candidates,target-candidates[i],i+1,curr,result);//每找过一个数，向后挪一个，即从数组的下一个数开始
+    		curr.remove(curr.size()-1);
+    	}
+    }
+
+}
+
+class CombinationSumIIDemo{
+	public static void main(String[] args){
+		CombinationSumII object=new CombinationSumII();
+		int[] candidates={10,1,2,7,6,1,5};
+		System.out.println(object.combinationSum2(candidates, 8));
+	}
+}
