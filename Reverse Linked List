@@ -1,0 +1,79 @@
+package Linked_List;
+
+/*
+ * 需求：反转一个单链表
+ */
+import java.util.*;
+//Definition for singly-linked list.
+class ListNode {
+ int val;
+ ListNode next;
+ ListNode(int x) { val = x; }
+}
+
+
+public class ReverseLinkedList {
+	/*
+	 * 分析：
+	 * 记头结点head的后一个节点为p,
+	 * 反转单链表，则在头结点的前面是一个null,再修改head.next之前要记录后一个节点
+	 * 此题循环的关键不能丢失p节点的前一个节点pre，后一个节点pnext
+	 * while循环之后，头结点变成了pre
+	 * 
+	 * 注意传进来的链表是空或者只有一个节点，直接返回原链表头
+	 */
+	 public ListNode reverseList(ListNode head) {
+	     if(head==null||head.next==null)
+	    	 return head;
+		 ListNode p=head.next;
+	      head.next=null;
+	      ListNode pnext,pre;
+	      pre=head;//初始化p的前一个节点pre
+	      pnext=p.next;//p的后一个节点pnext
+	      while(p!=null){
+	    	  pnext=p.next;//每次循环要向后挪一个
+	    	  p.next=pre;
+	    	  pre=p;
+	    	  p=pnext;
+	      }
+	       
+	      return pre;
+	 }
+}
+
+class ReverseLinkedListDemo{
+	public static void main(String[]  args){
+		ReverseLinkedList object=new ReverseLinkedList();
+		
+		ListNode singlelist,p;
+		singlelist=CreateList(1);
+		PutList(singlelist);
+		PutList(object.reverseList(singlelist));
+	}
+	
+	//创建一个单链表，参数n为几个节点。尾插法
+	public static ListNode CreateList(int n){
+		ListNode L,p,r;
+		L=new ListNode(0);//头结点，一个空表
+		r=L;//始终指向尾节点
+		for(int i=1;i<n;i++){
+			p=new ListNode(i);
+			r.next=p;
+			r=p;
+		}
+		r.next=null;
+		return L;
+	}
+	//读取单链表
+	public static void PutList(ListNode L){
+		ListNode p=L;
+		while(p!=null){
+			System.out.print(p.val+"->");
+			p=p.next;
+			if(p==null){
+				System.out.println("null");
+				break;
+			}
+		}
+	}
+}
