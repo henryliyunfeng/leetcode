@@ -1,0 +1,83 @@
+package sort;
+
+
+/*
+ * 需求：排序一个链表，时间复杂度O(n log n),常数
+ */
+
+import java.util.*;
+//Definition for singly-linked list.
+class ListNode {
+      int val;
+      ListNode next;
+      ListNode(int x) { val = x; }
+  }
+ 
+
+public class SortList {
+	/*
+	 * 分析：粗暴的方法就是
+	 * 1，把链表复制到ArrayList中
+	 * 2，对ArrayList中排序
+	 * 3，在把ArrayList还原成链表
+	 * 复杂度O（n+nlogn+n）=nlogn
+	 */
+	 public ListNode sortList(ListNode head) {
+	     ArrayList<Integer> tmp=new ArrayList<Integer>();
+	     ListNode p=head;
+	     while(p!=null){
+	    	 tmp.add(p.val);
+	    	 p=p.next;
+	     }
+	     //System.out.println(tmp);
+	     Collections.sort(tmp);
+	    //System.out.println(tmp);
+	     p=head;
+	     int i=0;
+	     while(p!=null){
+	    	 p.val=tmp.get(i);
+	    	 p=p.next;
+	    	 i++;
+	     }
+		 return head;
+	    }
+}
+
+
+class SortListDemo{
+	public static void main(String[] args){
+		SortList object=new SortList();
+		ListNode head=CreateList(10);
+		PutList(head);
+		
+		object.sortList(head);
+		PutList(head);
+	}
+	//创建一个单链表，随机数
+	public static  ListNode CreateList(int n){
+		ListNode head,r;
+		head=new ListNode(0);
+		r=head;
+		int j=1+(int)Math.random()*n;
+		for(int i=0;i<n;i++){
+			ListNode p=new ListNode(1+(int)(n*Math.random()));
+			r.next=p;
+			r=p;
+		}
+		r.next=null;
+		return head;
+	}
+	//打印
+	public static  void PutList(ListNode L){
+		ListNode p=L;
+		while(p!=null){
+			System.out.print(p.val+"->");
+			p=p.next;
+			if(p==null){
+				System.out.println("null");
+				break;
+			}
+		}
+	}
+}
+	
