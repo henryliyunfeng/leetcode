@@ -1,0 +1,30 @@
+package String;
+
+/*
+ * 需求：Returns the index of the first occurrence of needle in haystack,
+ *  or -1 if needle is not part of haystack.
+ */
+public class ImplementstrStr {
+	/*
+	 * 分析：一些特殊情况：haystack和needle都为空的情况，needle长度比haystack长的情况
+	 * 调用String的indexOf方法，返回子字符串第一次出现时的索引位置
+	 */
+    public int strStr(String haystack, String needle) {
+        if(haystack==null||needle==null)
+        	return -1;
+        if(haystack.length()<needle.length())
+        	return -1;
+        int index=0;
+        index=haystack.indexOf(needle);
+    	return index;
+    }
+}
+
+class ImplementstrStrDemo{
+	public static void main(String[] args){
+		String haystack="implementstrStr";
+		String needle="str";
+		ImplementstrStr obj=new ImplementstrStr();
+		System.out.println(obj.strStr(haystack, needle));
+	}
+}
